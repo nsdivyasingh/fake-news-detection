@@ -17,7 +17,7 @@ Before running the application, ensure you have the following installed:
 ## Installation
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/fake-news-detection.git
+   git clone https://github.com/nsdivyasingh/fake-news-detection.git
 
 
 2. Navigate to the project directory:
