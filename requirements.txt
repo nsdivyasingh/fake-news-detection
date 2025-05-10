@@ -1,5 +1,0 @@
-google-generativeai
-Pillow
-pytesseract
-vosk
-pyaudio

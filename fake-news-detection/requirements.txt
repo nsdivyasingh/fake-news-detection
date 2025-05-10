@@ -1,0 +1,8 @@
+pytesseract
+pillow
+vosk
+pyaudio
+matplotlib
+scikit-learn
+google-generativeai
+numpy
