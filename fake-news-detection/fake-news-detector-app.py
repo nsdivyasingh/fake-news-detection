@@ -13,10 +13,17 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 # Configure API Key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+if not os.getenv("GOOGLE_API_KEY"):
+    raise EnvironmentError("GOOGLE_API_KEY environment variable is not set.")
 ai_model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Path for Tesseract OCR
 pytesseract.pytesseract.tesseract_cmd = r'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+tess_path = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+if os.path.exists(tess_path):
+    pytesseract.pytesseract.tesseract_cmd = tess_path
+else:
+    raise FileNotFoundError("Tesseract not found at the specified path.")
 
 # Initialize Vosk model
 def initialize_vosk():
@@ -100,6 +107,9 @@ def listen_speech_to_text():
         p.terminate()
         if captured_text:
             entry.delete("1.0", tk.END)
+            if entry.get("1.0", tk.END).strip():
+                if not messagebox.askyesno("Overwrite", "Replace existing text?"):
+                    return
             entry.insert(tk.END, captured_text)
             messagebox.showinfo("Speech Recognized", f"Text: {captured_text}")
         else:
