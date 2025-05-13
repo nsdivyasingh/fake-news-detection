@@ -1,8 +1,11 @@
-pytesseract
-pillow
-vosk
-pyaudio
-matplotlib
-scikit-learn
-google-generativeai
 numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+joblib
+pytesseract
+Pillow
+speechrecognition
+pyaudio  # for microphone input (optional)
+nltk
