@@ -9,3 +9,5 @@ Pillow
 speechrecognition
 pyaudio  # for microphone input (optional)
 nltk
+google.generativeai
+vosk
