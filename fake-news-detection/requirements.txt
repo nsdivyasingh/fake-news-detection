@@ -7,7 +7,7 @@ joblib
 pytesseract
 Pillow
 speechrecognition
-pyaudio  # for microphone input (optional)
+pyaudio  
 nltk
 google.generativeai
 vosk
