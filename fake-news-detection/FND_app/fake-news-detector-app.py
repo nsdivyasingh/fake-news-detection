@@ -235,14 +235,14 @@ metrics_button = create_button(button_frame, "📊 Show Metrics", show_metrics, 
 metrics_button.grid(row=0, column=3, padx=10)
 add_tooltip(metrics_button, "View and evaluate performance metrics")
 
-# # Actual Label Selector
-# label_frame = tk.Frame(root, bg="#F9F7F3")
-# label_frame.pack(pady=10)
+# Actual Label Selector
+label_frame = tk.Frame(root, bg="#F9F7F3")
+label_frame.pack(pady=10)
 
-# actual_label_var = tk.StringVar(value="real")
-# tk.Label(label_frame, text="Actual Label:", font=("Poppins", 14), bg="#F9F7F3").pack(side="left", padx=10)
-# tk.Radiobutton(label_frame, text="Real", variable=actual_label_var, value="real", font=("Poppins", 12), bg="#F9F7F3").pack(side="left")
-# tk.Radiobutton(label_frame, text="Fake", variable=actual_label_var, value="fake", font=("Poppins", 12), bg="#F9F7F3").pack(side="left")
+actual_label_var = tk.StringVar(value="real")
+tk.Label(label_frame, text="Actual Label:", font=("Poppins", 14), bg="#F9F7F3").pack(side="left", padx=10)
+tk.Radiobutton(label_frame, text="Real", variable=actual_label_var, value="real", font=("Poppins", 12), bg="#F9F7F3").pack(side="left")
+tk.Radiobutton(label_frame, text="Fake", variable=actual_label_var, value="fake", font=("Poppins", 12), bg="#F9F7F3").pack(side="left")
 
 # Result Label
 result_label = tk.Label(root, text="Result: ", font=("Poppins", 16, "bold"), fg="#333", bg="#F9F7F3", wraplength=750, justify="center")
