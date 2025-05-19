@@ -27,8 +27,12 @@ else:
 
 # Initialize Vosk model
 def initialize_vosk():
-    global recognizer, vosk_model
-    vosk_model = Model(r'C:\\vosk-model\\vosk-model-en-us-0.22')
+    global recognizer, vosk_path
+    vosk_path = r"C:\vosk-model\vosk-model-en-us-0.22"
+    if not os.path.exists(vosk_path):
+        messagebox.showerror("Model Error", "Vosk model not found.")
+        exit()
+    vosk_model = Model(vosk_path)
     recognizer = KaldiRecognizer(vosk_model, 16000)
 
 # CSV Setup
@@ -123,7 +127,7 @@ def show_metrics():
         return
 
     accuracy = accuracy_score(true_labels, predicted_labels)
-    precision = precision_score(true_labels, predicted_labels, pos_label="real")
+    precision = precision_score(true_labels, predicted_labels, pos_label="real", zero_division=0)
     recall = recall_score(true_labels, predicted_labels, pos_label="real")
     f1 = f1_score(true_labels, predicted_labels, pos_label="real")
 
@@ -171,15 +175,6 @@ def upload_csv_data():
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
-# Tooltip helper
-def add_tooltip(widget, text):
-    def on_enter(e):
-        tip.place(x=e.x_root - root.winfo_rootx() + 10, y=e.y_root - root.winfo_rooty() + 10)
-        tip.config(text=text)
-    def on_leave(e):
-        tip.place_forget()
-    widget.bind("<Enter>", on_enter)
-    widget.bind("<Leave>", on_leave)
 
 # App UI
 root = tk.Tk()
@@ -188,7 +183,16 @@ root.geometry("950x750")
 root.configure(bg="#F9F7F3")
 
 # Tooltip label
-tip = tk.Label(root, text="", bg="#FFF8DC", font=("Poppins", 10), relief="solid", bd=1)
+tip = tk.Label(bg="yellow", fg="black", relief="solid", borderwidth=1, font=("Arial", 8))
+
+def add_tooltip(widget, text):
+    def on_enter(e):
+        tip.config(text=text)
+        tip.place(x=e.x_root - root.winfo_rootx() + 10, y=e.y_root - root.winfo_rooty() + 10)
+    def on_leave(e):
+        tip.place_forget()
+    widget.bind("<Enter>", on_enter)
+    widget.bind("<Leave>", on_leave)
 
 # Button style
 def create_button(master, text, command, bg, fg, hover_bg):
@@ -245,8 +249,10 @@ tk.Radiobutton(label_frame, text="Real", variable=actual_label_var, value="real"
 tk.Radiobutton(label_frame, text="Fake", variable=actual_label_var, value="fake", font=("Poppins", 12), bg="#F9F7F3").pack(side="left")
 
 # Result Label
-result_label = tk.Label(root, text="Result: ", font=("Poppins", 16, "bold"), fg="#333", bg="#F9F7F3", wraplength=750, justify="center")
-result_label.pack(pady=20)
+result_label = tk.Label(
+    root, text="Result: ", font=("Poppins", 16, "bold"), 
+    fg="#333", bg="#F9F7F3", wraplength=750, justify="center")
+result_label.pack(pady=10)
 
 # Initialize Vosk after UI loads
 root.after(1000, initialize_vosk)
